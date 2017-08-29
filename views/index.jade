@@ -1,0 +1,171 @@
+extends layout
+
+block content
+  h2 LeetCode Problems
+  p Welcome to Algorithms in Javascript - Excutable code
+  ul
+    li
+      a#pascals.clickme(href='#') Pascal's Triangle
+    li
+      a#twoSum.clickme(href='#') Two Sum
+    li
+      a#majorityElement.clickme(href='#') Majority Element
+    li
+      a#moveZeros.clickme(href='#') Move Zeros
+    li
+      a#plusOne.clickme(href='#') Plus One
+    li
+      a#maxAreaWater.clickme(href='#') Container With Most Water
+    li
+      a#bestTimeSellStock.clickme(href='#') Best Time to Sell Stock
+    li
+      a#containsDuplicate.clickme(href='#') Contains Duplicate
+
+  div.code-container
+    p Click an Algorithm to See its code
+
+  div.container
+
+      div#containsDuplicate-code
+        pre
+          code
+            |var containsDuplicate = function(nums) {
+            |  var hash = {};
+            |  for(var i = 0, len = nums.length; i < len; i++) {
+            |    if (hash[nums[i]]) return true;
+            |    hash[nums[i]] = true;
+            |  }
+            |  return false;
+            |};
+
+      div#pascals-code
+        pre
+          code
+            |var generate = function(numRows) {
+            |  var ans = [];
+
+            |  for (var i = 0; i < numRows; i++) {
+            |    if (i === 0) {
+            |      ans[i] = [1];
+            |      continue;
+            |    }
+
+            |    ans[i] = [];
+            |    for (var j = 0; j <= i; j++)
+            |      if (j === 0)
+            |        ans[i][j] = ans[i - 1][j];
+            |      else if (j === i)
+            |        ans[i][j] = ans[i - 1][j - 1];
+            |      else
+            |        ans[i][j] = ans[i - 1][j - 1] + ans[i - 1][j];
+            |  }
+
+            |  return ans;
+            |};
+
+      div#twoSum-code
+        pre
+          code
+            |var twoSum = function(nums, target) {
+            |    var hash = {};
+
+            |    for(var i = 0; i < nums.length; i++) {
+            |        var num = nums[i];
+            |        if(hash[num] !== undefined) {
+            |            return [hash[num], i]
+            |        } else {
+            |            hash[target - num] = i;
+            |        }
+            |    }
+
+            |    return [];
+            |};
+
+      div#majorityElement-code
+        pre
+          code
+            |var majorityElement = function(nums) {
+            |    var count = 0;
+            |    var result;
+
+            |    for(var i=0, len = nums.length; i < len;i++) {
+            |        if(count == 0 )
+            |            result = nums[i];
+
+            |        if(nums[i] !== result)
+            |            count--;
+            |        else
+            |            count++;
+            |    }
+
+            |    return result;
+            |};
+
+      div#moveZeros-code
+        pre
+          code
+            |var moveZeroes = function(nums) {
+            |  for (var x = nums.length ; x--; ) {
+            |      if(!nums[x]) {
+            |          nums.splice(x, 1);
+            |          nums.push(0);
+            |      }
+            |  }
+            |};
+      div#plusOne-code
+        pre
+          code
+            |var plusOne = function(digits) {
+            |    var ans = [];
+            |    var add = 0;
+            |    let len = digits.length;
+            | //--
+            |    digits[len - 1]++;
+            | //--
+            |    for (var i= len-1; i>=0;i-- ) {
+            |        let sum = digits[i] + add;
+            |        ans[i] = sum%10;
+            |        add = ~~(sum/10);
+            |    }
+            | //--
+            |    if(add) ans.unshift(add);
+            | //--
+            |    return ans;
+            |};
+
+      div#maxAreaWater-code
+        pre
+          code
+            |var maxArea = function(height) {
+            |    let maxWater = 0;
+            |    let i =0, j = height.length - 1;
+
+            |    while(i < j) {
+            |        var minHeight = Math.min(height[i], height[j]);
+            |        maxWater = Math.max(maxWater, (j-i)*minHeight);
+
+            |        while(height[i] <= minHeight && i < j) i++;
+            |        while(height[j] <=minHeight && i < j) j--;
+            |    }
+
+            |    return maxWater;
+            |};
+
+      div#bestTimeSellStock-code
+        pre
+          code
+            |var maxProfit = function(prices) {
+            |    let soln = 0;
+            |    let minn = Infinity;
+
+            |    let len = prices.length;
+
+            |    for ( let i=0; i< len; i++ ) {
+            |        minn = Math.min(minn, prices[i]);
+            |        soln = Math.max(soln, prices[i] - minn);
+            |    }
+            |    return soln;
+            |};
+
+
+

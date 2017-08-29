@@ -1,0 +1,24 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.container {
+  display: none;
+  width: 35%;
+}
+.code-container {
+  float: right;
+  width: 60%;
+  background-color: tomato;
+  color: white;
+  padding: 30px;
+}
+ul {
+  font-style: bold;
+  font-size: 16px;
+}
