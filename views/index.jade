@@ -3,7 +3,48 @@ extends layout
 block content
   h2 LeetCode Problems
   p Welcome to Algorithms in Javascript - Excutable code
+
+  br
+  h4 Microsoft Questions
+  ol
+    li
+      a#oneEditDistance.clickme(href="#") One Edit Distance
+    li
+      a#lcaBinaryTree.clickme(href='#') Lowest Common Ancestor Binary tree
+    li
+      a#mergeSortedArray.clickme(href="#") Merge Sorted Array
+    li
+      a#numberOfIslands.clickme(href="#") Number of Islands
+    li
+      a#bstFirstGreaterthanTarget.clickme(href='#') BST First node greater than given Target
+    li
+      a#lcaBinarySearchTree.clickme(href='#') Lowest Common Ancestor Binary Search tree
+    li
+      a#designTicTac.clickme(href='#') Design Tic Tac Toe
+    li
+      a#countNumbersWithUniqueDigits.clickme(href="#") Count Numbers with Unique Digits
+    li
+      a#excelSheetNumber.clickme(href='#') Excel Sheet Number
+    li
+      a#spiralMatrix.clickme(href='#') Spiral Matrix
+    li
+      a#battleShip.clickme(href='#') Count BattleShips
+    li
+      a#copyRandomList.clickme(href='#') Copy List with Random Pointer
+    li
+      a#reverseLinkedList.clickme(href='#') Reverse Linked List
+  br
+  br
+  h4 Tree Questions
+  ol
+    li
+      a#pathSum.clickme(href="#") Path Sum
+  br
+  br
+  h4 Array Questions
   ul
+    li
+      a#maximumDistanceinArrays.clickme(href='#') Maximum Distance in Arrays
     li
       a#pascals.clickme(href='#') Pascal's Triangle
     li
@@ -20,11 +61,458 @@ block content
       a#bestTimeSellStock.clickme(href='#') Best Time to Sell Stock
     li
       a#containsDuplicate.clickme(href='#') Contains Duplicate
+    li
+      a#searchRotatedArray2.clickme(href='#') Search in Rotated Array -II
+    li
+      a#KDifferentpairsinArray.clickme(href='#') K Different pairs in an array
+    li
+      a#totalHammingDistance.clickme(href='#') Total Hamming Distance
+    li
+      a#partitionEqualSubsetSum.clickme(href='#') Total Hamming Distance
 
   div.code-container
     p Click an Algorithm to See its code
 
   div.container
+
+      div#pathSum-code
+        pre
+          code
+            |var hasPathSum = function(root, sum) {
+            |  if (!root)
+            |    return false;
+
+            |  if (!root.left && !root.right) {
+            |    if (root.val === sum)
+            |      return true;
+            |    return false;
+            |  }
+
+            |  if (root.left)
+            |    var a = hasPathSum(root.left, sum - root.val);
+
+            |  if (root.right)
+            |    var b = hasPathSum(root.right, sum - root.val);
+
+            |  return Boolean(a || b);
+            |};
+
+      div#oneEditDistance-code
+        pre
+          code
+            |var isOneEditDistance = function(s, t) {
+            |  for (var i = 0; i < Math.min(s.length, t.length); i++) {
+            |    if (s.charAt(i) != t.charAt(i)) {
+            |      if (s.length == t.length) // s has the same length as t, so the only possibility is replacing one char in s and t
+            |        return s.substring(i + 1) === t.substring(i + 1);
+            |      else if (s.length < t.length) // t is longer than s, so the only possibility is deleting one char from t
+            |        return s.substring(i) === t.substring(i + 1);
+            |      else // s is longer than t, so the only possibility is deleting one char from s
+            |        return t.substring(i) === s.substring(i + 1);
+            |    }
+            |  }
+            |  /All previous chars are the same, the only possibility is deleting the end char in the longer one of s and t
+            |  return Math.abs(s.length - t.length) == 1;
+            |};
+
+      div#lcaBinaryTree-code
+        pre
+          code
+           |var lowestCommonAncestor = function(root, p, q) {
+           |   if(root === null || root === p || root === q) {
+           |     return root;
+           |   }
+
+           |   var left = lowestCommonAncestor(root.left, p, q);
+           |   var right = lowestCommonAncestor(root.right, p, q);
+
+           |   if(left !== null && right !== null) {
+           |     return root;
+           |   }
+
+           |   return left || right;
+           | };
+
+
+      div#mergeSortedArray-code
+        pre
+          code
+            |var merge = function(A, m, B, n) {
+            |  while(m > 0 && n > 0){
+            |    if(A[m - 1] > B[n - 1]){
+            |      A[m+n-1] = A[m-1];
+            |      m--;
+            |    } else {
+            |      A[m+n-1] = B[n-1];
+            |      n--;
+            |    }
+            |  }
+
+            |  while(n > 0) {
+            |    A[m+n - 1] = B[n - 1];
+            |    n--;
+            |  }
+            |};
+
+      div#numberOfIslands-code
+        pre
+          code
+            |var numIslands = function(grid) {
+            |    var count = 0;
+
+            |    function traverseIsland(i, j, grid) {
+            |      var stack = [];
+
+            |      stack.push([i, j]);
+
+            |      while(stack.length) {
+            |        var pair = stack.pop();
+            |        i = pair[0];
+            |        j = pair[1];
+
+            |        if(i >= 0 && i < grid.length && j >= 0 && j < grid[0].length && grid[i][j] === '1') {
+            |          grid[i][j] = '2';
+            |          stack.push([i + 1, j]);
+            |          stack.push([i - 1, j]);
+            |          stack.push([i, j + 1]);
+            |          stack.push([i, j - 1]);
+            |        }
+            |      }
+            |    }
+
+            |    for(var i = 0; i < grid.length; i++) {
+            |      for(var j = 0; j < grid[0].length; j++) {
+            |        if(grid[i][j] === '1') {
+            |          traverseIsland(i, j, grid);
+            |          count++;
+            |        }
+            |      }
+            |    }
+
+            |  return count;
+            |};
+
+      div#bstFirstGreaterthanTarget-code
+        pre
+          code
+            |def nextNode(node,target):
+            |  result = None
+            |  while node:
+            |    #if value > target, can be successor!
+            |    if node.data > target:
+            |      result = node.data
+            |      #IMPORTANT: find smallest of the largest!
+            |      node = node.left
+            |    else:
+            |      #go right!
+            |      node = node.right
+            |  return result
+
+      div#lcaBinarySearchTree-code
+        pre
+          code
+            |var lowestCommonAncestor = function(root, p, q) {
+            |  var valueA = p.val;
+            |  var valueB = q.val;
+            |  var value  = root.val;
+
+            |  if (valueA < value && valueB < value)
+            |    return lowestCommonAncestor(root.left, p, q);
+            |  else if (valueA > value && valueB > value)
+            |    return lowestCommonAncestor(root.right, p, q);
+            |  else
+            |    return root;
+            |};
+
+      div#designTicTac-code
+        pre
+          code
+            |var TicTacToe = function(n) {
+            |  this.rows = [];
+            |  this.cols = [];
+            |  this.size = n;
+            |  this.diagonal = 0;
+            |  this.antidiagonal = 0;
+            |};
+
+            |TicTacToe.prototype.move = function(row, col, player) {
+            |  var toAdd = player == 1 ? 1 : -1;
+            |  this.rows[row] += toAdd;
+            |  this.cols[col] += toAdd;
+
+            |  if(row == col) {
+            |    this.diagonal += toAdd;
+            |  }
+
+            |  if(col == this.cols.length - row - 1) {
+            |    this.antiDiagonal += toAdd;
+            |  }
+
+            |  if(Math.abs(this.cols[col]) == this.size ||
+            |    Math.abs(this.rows[row]) == this.size ||
+            |    Math.abs(this.diagonal) == this.size ||
+            |    Math.abs(this.antiDiagonal) == this.size) {
+            |      return player;
+            |   }
+
+            | return 0;
+            |};
+
+      div#countNumbersWithUniqueDigits-code
+        pre
+          code
+            | if n = 1 return 10, f(1) = 10. (0, 1, 2, 3, ...., 9)
+            | f(2) = 9 * 9. Because for each number i from 1, ..., 9, we can pick j to form a 2-digit number ij
+            | and there are 9 numbers that are different from i for j to choose from.
+
+            | f(3) = f(2) * 8 = 9 * 9 * 8. Because for each number with unique digits of length 2, say ij,
+            | we can pick k to form a 3 digit number ijk and
+            | there are 8 numbers that are different from i and j for k to choose from.
+
+            | Similarly f(4) = f(3) * 7 = 9 * 9 * 8 * 7....
+
+            | f(11) = 0 = f(12) = f(13)....
+
+            | any number with length > 10 couldn't be unique digits number.
+
+            | ###################################################
+            |public int countNumbersWithUniqueDigits(int n) {
+            |  if (n == 0)     return 1;
+
+            |  int res = 10;
+            |  int uniqueDigits = 9;
+            |  int availableNumber = 9;
+            |  while (n-- > 1 && availableNumber > 0) {
+            |    uniqueDigits = uniqueDigits * availableNumber;
+            |    res += uniqueDigits;
+            |    availableNumber--;
+            |  }
+            |    return res;
+            |}
+
+      div#excelSheetNumber-code
+        pre
+          code
+            | split the string('') and reverse and then store in an array
+            | make a  new string by join('') on array and then calculate result number
+            | by applying reduce function on the array and add to accumulator + Math.pow(26, index) * (str.charCodeAt(index) - 64);
+
+            |var titleToNumber = function(s) {
+            |  var a = s.split('').reverse();
+            |  var str = a.join('');
+
+            |  var result = a.reduce(function(accum, item, index ) {
+            |    return accum + Math.pow(26, index) * (str.charCodeAt(index) - 64);
+            |   },0);
+
+            |  return result;
+            |};
+
+      div#spiralMatrix-code
+        pre
+          code
+            | have x =0, y=0, and  while loop until rows.length < 0 and cols.length < 0
+            | now have two conditions in loop if rows  = 1 or cols  = 1 and direct copy to result, but
+            | have for loop from i =0. i < col-1 and result[x][y++] - so 4 for loops and then
+            | x++, y++ and cols -= 2 and rows also
+            br
+
+            |var spiralOrder = function(matrix) {
+            |  var result = [];
+            br
+            |  if(matrix === null || matrix.length === 0 || matrix[0].length === 0){
+            |    return result;
+            |  }
+            br
+            |var rows = matrix.length;
+            |var cols = matrix[0].length;
+            br
+            |var x = 0;
+            |var y = 0;
+            br
+            |while(rows > 0 && cols > 0){
+            |  if(rows === 1){
+            |    for(var i = 0; i < cols; i++){
+            |      result.push(matrix[x][y++]);
+            |    }
+            |    break;
+            |  } else if(cols === 1){
+            |    for(i = 0; i < rows; i++){
+            |      result.push(matrix[x++][y]);
+            |    }
+            |    break;
+            |  }
+            br
+            |  for(i = 0; i < cols - 1; i++){
+            |    result.push(matrix[x][y++]);
+            |  }
+            |  for(i = 0; i < rows - 1; i++){
+            |    result.push(matrix[x++][y]);
+            |  }
+            |  for(i = 0; i < cols - 1; i++){
+            |    result.push(matrix[x][y--]);
+            |  }
+            |  for(i = 0; i < rows - 1; i++){
+            |    result.push(matrix[x--][y]);
+            |  }
+
+            |  x++;
+            |  y++;
+            |  cols -= 2;
+            |  rows -= 2;
+            |}
+            br
+            |return result;
+          |};
+
+
+
+      div#battleShip-code
+        pre
+          code
+            | Inside tow for loops of the matrix, check if it is a '.' continue and then if previous row has 'x' continue
+            | and if previous column has 'x' continue
+            | and if three conditions are false, than increment count;
+            br
+            br
+            |var countBattleships = function(board) {
+            |  var count = 0;
+            |  let m = board.length;
+            |  let n = board[0].length;
+
+            |  for(var i=0; i< m; i++) {
+            |    for(var j=0; j< n; j++) {
+            |      if(board[i][j] === '.')
+            |        continue;
+            |      if(i > 0 && board[i - 1][j] === 'X')
+            |        continue;
+            |      if(j > 0 && board[i][j - 1] === 'X')
+            |        continue;
+            |      count++;
+            |    }
+            |  }
+
+            |return count;
+            |};
+
+
+      div#copyRandomList-code
+        pre
+          code
+            | Create a newHead(0) and then newHead.next call the deepCopy function.
+            | Have a hash which has keys as node.label and values as the new RAndomLIst(node.label)
+            | and for that new created node, call the function newNode.next = deepCopy(node.next)
+            | and newNode.Random = deepCopy(node.random)
+            | return newNode.next;
+            | and finally return newHead.next;
+            | ***********
+            br
+
+            |var copyRandomList = function(head) {
+            |  var hash = {};
+
+            |  var newH = new RandomListNode(0);
+
+            |  newH.next = deepCopy(head);
+
+            |  function deepCopy(node) {
+            |    if(node === null) return node;
+            |    if(hash[node.label])
+            |      return hash[node.label];
+
+            |    var newNode = new RandomListNode(node.label);
+
+            |    hash[node.label] = newNode;
+
+            |    newNode.next = deepCopy(node.next);
+
+            |    newNode.random = deepCopy(node.random);
+            |    return newNode;
+            |  }
+
+            |  return newH.next;
+            |};
+
+      div#reverseLinkedList-code
+        pre
+          code
+            | Take a temp variable and then assign every time head.next to it and then assign that head.next element to newHead.
+            |var reverseList = function(head) {
+            |  if(!head) return null;
+            |  let newHead = null;
+
+            | while(head !== null) {
+            |    let temp = head.next;
+            |    head.next = newHead;
+            |    newHead = head;
+            |    head = temp;
+            |}
+
+            |return newHead;
+            |};
+
+      div#partitionEqualSubsetSum-code
+        pre
+          code
+            | We should see can we distribute into two arrays so sum is equal.
+            | First find total sum and sum%2 !== 0 return false. Now do DP approach
+            | dp[0] = true, dp length is sum/2 + 1;
+            | First for loop over the numbers(1-n) and then for loop over the j=sum/2 to j >= nums[i-1] j--
+            | dp[j] = dp[j] || dp[j - nums[i]]
+            | return dp[sum/2];
+            | Here u are looping over the sum/2 to the value of that particular number in the loop and build dp array.
+
+      div#totalHammingDistance-code
+        pre
+          code
+            | Total hamming fistance is for loop over 0- 31 bit(j) and in that again a for loop
+            | for given numbers count each bit difference like count += (nums[i] >> j) & 1;
+            | So now that total for that bit will be total += count*(n-count);  since hamming distance between each differnet number we have to find
+            |  After the total 31 bit, return the total;
+
+
+
+      div#KDifferentpairsinArray-code
+        pre
+          code
+            | Have a hash and story the key as element and value as how many times it
+            | has occured and then now loop over the array and see if hash(nums[i]+k)
+            | is defined and increment count - O(n) + O(n)memory
+            | ***********************************
+            | ***********************************
+            | var findPairs = function(nums, k) {
+            |    var hash = {};
+            |    if(nums.length === 0 || k < 0) {
+            |      return 0;
+            |    }
+
+            |    nums.forEach(function(item) {
+            |      hash[item] = ~~(hash[item]) + 1;
+            |    });
+
+            |var count =0;
+
+            |    for( var i in hash) {
+            |      var num = Number(i);
+            |      if(k === 0) {
+            |        if(hash[num] > 1) {
+            |          count += 1;
+            |          console.log(count);
+            |        }
+
+            |      } else if(hash[num+k] !== undefined) {
+            |        count += 1;
+            |      }
+            |    }
+
+            |    return count;
+            |  };
+
+
+      div#searchRotatedArray2-code
+        pre
+          code
+            | Do Binary search and find element. O(logn)
 
       div#containsDuplicate-code
         pre
